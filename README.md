@@ -3,9 +3,10 @@
 **Technologies**: PySpark, AWS (SageMaker, S3), Spark NLP, Matplotlib, DuckDB, GitHub, Quarto  
 **Subreddits Analyzed**: r/investing, r/cryptocurrency, r/finance
 
+![Subreddit Banner](/website-source/subreddit_banner.png)
 ## 🔍 Project Overview
 
-This project explores the relationship between retail investor sentiment on Reddit and market dynamics, focusing on the **r/investing** and **r/cryptocurrency** communities. By analyzing over 2 million Reddit comments and posts, we aimed to understand how social sentiment, trending discussions, and user engagement reflect and potentially predict financial behavior—especially around volatile instruments like Bitcoin.
+This project explores the relationship between retail investor sentiment on Reddit and market dynamics, focusing on the **r/investing** and **r/cryptocurrency** communities. By analyzing over 3 million Reddit comments and posts, we aimed to understand how social sentiment, trending discussions, and user engagement reflect and potentially predict financial behavior—especially around volatile instruments like Bitcoin.
 
 ---
 
