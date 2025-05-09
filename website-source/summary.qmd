@@ -1,0 +1,31 @@
+# Summary
+![ Banners of the subreddits analyzed for the project](subreddit_banner.png)
+
+By analyzing a vast collection of investment-related subreddits, including r/cryptocurrency, and r/investing, we were able to extract rich insights that enhanced our understanding of the discussions and behaviors shaping these online communities. Through exploratory data analysis (EDA), natural language processing (NLP), and machine learning (ML) models, we explored several avenues to understand patterns, sentiments, and their relationship with financial market dynamics.
+
+First, we sought to determine the types of investments and stocks most frequently discussed in these subreddits. Using textual content analysis and visualizations, we identified key discussion themes, emerging trends, and the influence of market events on user engagement. Peaks in comment volumes often correlated with major financial announcements or market movements, underscoring the potential for Reddit as an indicator of retail investor sentiment.
+
+Next, we conducted NLP-driven sentiment analysis to evaluate the tone of subreddit discussions. Our analysis revealed an overall optimistic sentiment, especially in cryptocurrency-related discussions, where comments exhibited a higher proportion of positive sentiment. By identifying topics like the Federal Reserve and Bitcoin, we further analyzed how sentiment fluctuated over time, linking spikes to external factors such as economic reports or regulatory announcements.
+
+We then applied ML techniques to investigate whether these Reddit discussions could predict Bitcoin price movements or volatility. Despite rigorous preprocessing, feature engineering, and experimentation with various models—including regression and gradient-boosted trees—the predictive power of these discussions proved limited. This result highlights the challenges of using social media data to predict financial markets, which are inherently complex and influenced by numerous variables beyond online sentiment.
+
+Additionally, we observed disparities in engagement levels across subreddits and user types, revealing insights into how different communities discuss financial topics. Understanding these dynamics can be valuable for market analysts, content creators, and financial institutions seeking to tailor their strategies to retail investor trends.
+
+---
+
+## Future Work
+
+Having explored several aspects of investment-related discussions on Reddit, there are many opportunities to further enhance our understanding:
+
+1. **Advanced NLP Techniques**: Employing transformer-based models like BERT or GPT for topic modeling and sentiment analysis could provide deeper insights into user behavior and sentiment nuances.
+2. **Multi-Platform Analysis**: Expanding the scope to include other social media platforms, such as Twitter or Discord, could reveal additional patterns and correlations in retail investor sentiment.
+3. **Predictive Modeling**: Investigating alternative datasets or features, such as user engagement metrics or cross-subreddit interactions, may improve model performance for financial predictions.
+4. **Sentiment and Market Dynamics**: Studying the temporal lag between sentiment shifts and market reactions could uncover predictive relationships not captured in this project.
+
+---
+
+## Final Thoughts
+
+This project provided valuable insights into the dynamic and complex relationships between social media discussions and financial markets. By leveraging techniques like EDA, NLP, and ML, we demonstrated the potential of Reddit as a tool for understanding retail investor sentiment and engagement trends. While our findings suggest limitations in using these discussions for direct market predictions, they highlight the significant role of social platforms in shaping investment narratives.
+
+A project by Group 12.

@@ -1,0 +1,79 @@
+# ML
+
+
+## Introduction 
+
+
+See all code for this workbook's plots and results:
+* [Code for this workbook](ml_copy.ipynb)
+
+Our machine learning work tied our NLP data of comments from the r/investing, r/cryptocurrency, and r/finance subreddits together to investigate whether these forums might influence the price movement of cryptocurrency. We investigated this connection because of the much-discussed relationship between so-called 'meme stock' investors (retail investors who favor risky assets and cause market volatility) and cryptocurrency as an asset class. In particular, we wanted to investigate the relationship between the Bitcoin market and the volume of comments on these subreddits, the volume of comments mentioning particular topics (cryptocurrencies, the s&p 500, and the federal reserve), and the sentiment of those comments. Unfortunately, upon training and comparing several models, we found little to no measurable relationship between the comment data and the movement in Bitcoins price, and our models could not outperform naive baselines.
+
+
+Question 1: Does the number and sentiment of Reddit comments in the studied subreddits predict whether Bitcoin's price will increase the next day? 
+
+Question 2: Does the number and sentiment of Reddit comments in the studied subreddits predict Bitcoin's volatility the next day?
+
+
+## ML Analysis Report
+
+### Data Set Discussion
+
+- For the ML tab, each unit of observation is one day in our dataset. So even though we have 3 million comments we only have around 424 observations. We found this to be the best approach to our topic, because markets move at a large scale. As such, we thought we would be more likely to see an affect of the subreddits in the market across many aggregated comments together, rather than a model which operated at the comment level. 
+
+- We also though it important to note that our apriori expectation is that the null hypothesis is very likely, given that financial markets are known to be noisy. Futher, the efficient market hypothesis dictates that if there were truly a relationship bebtween a particular social media website and market movements, this should be found and exploited quickly, until the pattern was nullified. On the other hand, we are exploring cryptocurrency markets, which historically have been more responsive to online community sentiment and other inefficient forces, so we still thought this was an interesting avenue to pursue.
+
+### Preprocessing
+
+- Our data on Bitcoin pricing comes from the investing.com website, which has daily historic price data, including the daily high, open, and low prices. From these raw numbers, we defined an increase as a day where the price of Bitcoin closed higher than it opened, and we defined volatility as the daily range (high price minus low price) measured as a percent of the opening price. These two features became our response variables for the models.
+
+- Our predictor variables started with the outputs of our NLP model. The first 3 features was the daily tally of comments mentioning each of the three topics outlined above (federal reserve, crypto, and the S&P) as identified by regex matching. The next 3 were the daily tally of comments flagged as positive, negative, and neutral by the pretrained deep learning sentiment model. 
+
+- Our pipeline for these variables was to: 1) Merge the predictors and response variables into a single PySpark data frame, joining with the dates as unique IDs. Each day's predictor variables were matched to the NEXT days price movements, so that we were predicting  future price movements and never previous or contemporaneous ones. 2) We vectorized and normalized the variables using a PySpark pipeline, 3) We split the data 70-20-10 into training, testing, and validation datasets. 4) We fit the pipeline ONLY on the training data to avoid information leak, and then passed all of the datasets through it.
+
+### Training Machine Learning Models
+
+While we set out to answer two different predictive tasks, one being a classification task (next day direction) and the other being a regression task (next day volatility), we followed a similar procedure for both.
+
+In each case we fit a regression model and a gradient boosted trees model. All models were fully implemented in PySpark. The regression model was linear regression for the next-day volatility, and a logistic regression model for next-day price direction. The gradient boosted trees models were the GBTRegressor and the GBTClassifier for each task, respectively. After fitting a version of all four models with default parameters, we used the CrossValidator tool to create another version with tuned hyperparameters. Hyperparameters were evaluated across several folds within the training data, and the best model was selected according to the chosen evaluation metric (rmse for regression and accuracy for classification). Then, we compared the efficacy of these models to answer the questions.
+
+### Does the number and sentiment of Reddit comments in the studied subreddits predict whether Bitcoin's price will increase the next day? (Classification)
+
+As expected, the data was highly noisy, and all four models performed poorly at predicting the next-days price movements. 
+
+![ROC Curves logistic](log_models.png)
+
+The reasoning behind the poor logistic regression result appears to lie in the intercept value. Essentially, the logistic regression model trained to be a most-commonly-occuring-class naive predictor, because no information contained in the predictors enabled the model to beat simply guessing the price of Bitcoint would increase every day. 
+
+![ROC Curves for Trained and Untrained GBT Classifiers](gbt_models.png)
+
+The GBT models, however, made differentiated predictions based on the data. Unfortunately, neither of these could beat the naive predictor (with area 0.5). However, the tuned model did perform slightly better than the untuned model, suggesting that careful selection of hyperparameters did make a difference. Overall however, there was little reason to think that any of the four models contained useful information on the classification task at hand.
+
+
+| Default | Logistic | Logistic Tuned | GBT | GBT Tuned |
+|---------|:-----:|:------:|:------:|:------:|
+| Train      | 0.548   |    0.548 |    0.828 |   0.786   |
+| Test     | 0.439  |   0.439 |   0.439 |  0.476   |
+: Accuracy by Model
+
+
+The gradient boosted classifier which did not have hyperparameter tuning shows clear overfitting in the disparity between the training accuracy (0.83) and testing accuracy (0.44). However, across the models, the accuracy was quite low in the test set, with all four failing to achieve 50% accuracy. As such,  we would conclude that the number and sentiment of Reddit comments on the subreddits we studied did not have a predictive relationship with Bitcoin price increases, at least that we could discern with the models tests. Amongst the models however, the hyperparameter tuned Gradient Boosted Trees was the best at avoiding overfitting of the training data.
+
+
+### Does the number and sentiment of Reddit comments in the studied subreddits predict Bitcoin's volatility the next day? (Regression)
+
+The same procedure was followed for the regression task, and once again the results did not suggest strong predictive power amongst the predictors for the target variable (the next day's Bitcoin price volatility).
+
+![Test results for the regression task, GBT regressor vs. Linear Regression](lr_results.png)
+
+The two approaches' predictions in the chart above demonstrate opposite problems. While the Gradient Boosted Trees regressor makes oversized predictions erroneously, the linear regression model nearly always predicts the mean value with little deviance. The tuned models both had regularization terms which prompted them to reduce coefficients to 0 and simply predict the mean value, so the predictions shown above are from the untuned values. That result follows from the low explanatory power of the variables and lack of relationship with the predictor.
+
+
+| Default | Linear Reg. | Linear Reg. Tuned | GBT Regressor | GBT Regressor Tuned |
+|---------|:-----:|:------:|:------:|:------:|
+| Train      | 0.022   |    0.023 |    0.015 |   0.022   |
+| Test     | 0.022  |   0.022 |   0.025 |  0.022   |
+: RMSE by Model
+
+
+As shown above, the RMSE of the models was quite high, at around 2% daily volatilty. However, while the models overall did not fit the data, the coefficients do provide some insight to answer the research question. The most important features in the linear regression model were the number of comments mentioning particular topics, especially cryptocurrency and the S&P. In particular, each comment mentioning the S&P on a given day was tied to about .006% more daily volatility in Bitcoin's price, and 0.002% per comment mentioning cryptocurrency. Overall, however, these coefficients were part of a model with very little explanatory power, but they at least demonstrate the direction of the relationship between the variables according to once appraoch. As such, we would conclude that the number and sentiment of Reddit comments has no bearing on the next-day volatility of Bitcoin prices.

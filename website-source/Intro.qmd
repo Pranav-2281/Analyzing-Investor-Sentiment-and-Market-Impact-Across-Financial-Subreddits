@@ -1,0 +1,110 @@
+# Introduction
+
+![](DALL_E.png)
+
+This project focuses on exploring stock and investment discussions within the r/investing and r/cryptocurrency subreddits. By analyzing the types of investments being discussed and examining how engagement varies between these communities, we aim to uncover meaningful insights about investor behavior and sentiment and how these communities interact with and respond to the financial world.
+
+We will analyze the distribution of posts over time, identifying the most frequently discussed topics, and assessing user engagement patterns through metrics such as comment counts and post frequencies. We will also look at key linguistic features, such as word frequencies and the prevalence of specific terms, to gain an initial understanding of the dominant themes within each subreddit. This foundational analysis will provide critical insights into the data's composition and guide the design of subsequent NLP and machine learning workflows.
+
+We will use natural language processing to analyze the content of these discussions, employing techniques like topic modeling to identify key themes and sentiment analysis to gauge community sentiment around specific investments. By tracking sentiment trends over time, we aim to observe how opinions in these subreddits evolve in response to major financial events. Our analysis will also explore the dynamics of user engagement, examining how participation fluctuates and how users engage with posts on different topics.
+
+To deepen our understanding, we will investigate the relationship between discussions on these platforms and real-world market events. We will explore how sentiment and engagement align with market movements, such as whether positive discussions correlate with stock rallies or how bearish sentiment reflects cryptocurrency sell-offs. Additionally, we plan to leverage machine learning to examine whether patterns in subreddit sentiment and activity can predict short-term market volatility, particularly for highly discussed financial instruments.
+
+By combining advanced NLP techniques with machine learning, we hope to uncover valuable insights into the intersection of online investment discussions and market behavior. This research aims to contribute to the growing understanding of how social media influences and reflects the financial landscape, offering meaningful perspectives for investors, analysts, and researchers. Through this work, we seek to highlight the unique role these communities play in shaping modern investment discourse.
+
+
+Main subreddits related to investing of interest for the project:
+
+![Banners of the subreddits analyzed for the project](subreddit_banner.png)
+
+## Business Questions
+
+In order to better address the overall topic of investor behavior and sentiment analysis in Reddit investment communities, we will look at several subtopics driven by business questions that will be addressed through exploratory analysis, natural language processing, or machine learning.
+
+---
+
+### Business Goal 1
+
+* **Determine the most common words on the CryptoCurrency and Investing subreddits.**
+
+**Technical Proposal**: Conduct word counts on posts and comments from the CryptoCurrency and Investing subreddits to identify frequently discussed terms and topics. By focusing on commonly occurring words and phrases, the analysis aims to reveal popular themes and community topics. The approach involves text processing, filtering for relevancy, and frequency analysis of terms to capture meaningful insights about interests and trends within the subreddit community.
+
+---
+
+### Business Goal 2
+
+* **Determine if certain world events lead to increased discussion volume on the Investing subreddit.**
+
+**Technical Proposal**: Analyze comment activity over time to identify significant spikes and trends. Correlate these peaks with major global events or market conditions to reveal patterns linking real-world occurrences to changes in subreddit engagement, offering insights into the community’s responsiveness to external influences.
+
+---
+
+### Business Goal 3
+
+* **Identify temporal patterns in investor engagement to align outreach strategies and predict shifts in market sentiment.**
+
+**Technical Proposal**: Utilize a heatmap analysis of engagement levels by hour of day and week of the year to uncover temporal patterns in investor activity. Apply time series analysis techniques to detect significant peaks and trends in comment volume. Correlate these patterns with key financial and global events, such as earnings reports, economic announcements, and geopolitical developments. This analysis will provide actionable insights for optimizing communication timing and anticipating periods of heightened market sentiment or volatility.
+
+---
+
+### Business Goal 4
+
+* **Determine which stocks are most frequently mentioned on Reddit to gauge general interest and popularity.**
+
+**Technical Proposal**: Analyze Reddit posts and comments to identify the most mentioned stocks, focusing on their frequency and trends. Visualize results using a bubble chart to highlight popular stocks and compare these mentions against stock price movements to uncover potential correlations.
+
+---
+
+### Business Goal 5
+
+* **Determine which cryptocurrencies are most frequently mentioned on Reddit to gauge general interest and popularity.**
+
+**Technical Proposal**: Perform text processing and frequency analysis on posts and comments in the CryptoCurrency subreddit to identify the most frequently discussed cryptocurrencies. The goal is to understand which cryptocurrencies attract the most attention and discussion in the community.
+
+---
+
+### Business Goal 6
+
+* **Determine how cryptocurrency prices affect the number of posts and comments on the CryptoCurrency subreddit.**
+
+**Technical Proposal**: Analyze the relationship between cryptocurrency prices and the number of posts and comments on the CryptoCurrency subreddit. Examine correlations between price movements and engagement to determine whether significant price changes lead to more or fewer posts and comments. The process involves data collection, preprocessing, and statistical analysis.
+
+---
+
+### Business Goal 7
+
+* **Identify the most frequently discussed topics in investing-related comments.**
+
+**Technical Proposal**: Use RegEx matching to classify comments based on mentions of topics such as “S&P 500,” “Bitcoin,” and “Federal Reserve.” Quantify the frequency of these mentions to identify the most prevalent topics and assess their relative prominence, providing insights into the subjects driving discussions in investing forums.
+
+---
+
+### Business Goal 8
+
+* **Explore the variation in comment lengths and distributions across subreddits for NLP analysis.**
+
+**Technical Proposal**: Analyze comment data characteristics across multiple subreddits by sampling data to manage computational resources. Examine the distribution of comment lengths and analyze temporal patterns in comment activity. Insights from this analysis will inform downstream NLP tasks.
+
+---
+
+### Business Goal 9
+
+* **Analyze how sentiment varies across key topics and changes over time in investing-related comments.**
+
+**Technical Proposal**: Combine topic classification with sentiment analysis to measure the proportion of positive, negative, and neutral comments associated with each subject. Build and utilize a sentiment pipeline using Spark NLP. Examine trends over time to identify shifts in sentiment and their relationships with external events.
+
+---
+
+### Business Goal 10
+
+* **Does the volume and sentiment of comments on our subreddit affect next-day Bitcoin volatility?**
+
+**Technical Proposal**: Calculate Bitcoin volatility from daily price data and analyze its relationship with Reddit comment volume and sentiment. Categorize sentiment and generate topic-specific comment counts. Use models such as linear regression and gradient boosted trees to predict volatility, evaluating performance using RMSE and optimizing through hyperparameter tuning.
+
+---
+
+### Business Goal 11
+
+* **Does the volume and sentiment of comments predict whether Bitcoin will increase or decrease in price the next day?**
+
+**Technical Proposal**: Use logistic regression and gradient boosted trees to model the impact of comment volume and sentiment on next-day price movement (up/down). Predictors include sentiment categories and comment counts. Evaluate performance with accuracy and ROC curves, optimizing models through hyperparameter tuning.

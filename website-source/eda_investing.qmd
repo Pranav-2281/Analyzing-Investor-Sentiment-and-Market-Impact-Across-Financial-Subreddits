@@ -1,0 +1,69 @@
+# Investing Sub reddit Exploratory Data Analysis
+
+Link to full code:
+
+[link](code_save/student-starter-notebook-sagemaker_investing_eda (1).ipynb)
+
+
+
+## Introduction
+
+This exploratory data analysis (EDA) investigates comment trends, topics, and sentiment in the investing subreddit. By analyzing Reddit discussions, we aim to uncover insights that can be leveraged for content strategy, product development, and investment-related decision-making. Social media platforms like Reddit have become influential in shaping investor sentiment, and identifying patterns within these discussions can help understand emerging trends, popular topics, and interest in specific using Alpha Vantage API to gather stock prices .
+
+
+## Business Questions and Analysis
+
+### Business goal 1 - Determining the Most Common Words on Investing Subreddit
+
+> * Objective: * Identify frequently used words in the investing subreddit to understand the main discussion themes.
+
+![](bar chart_20_most_common words.png)
+
+#### Analysis -
+
+> Words like "money," "market," "years," and "invest" suggest that users are primarily discussing financial concepts, market conditions, and long-term investment strategies.
+> The presence of words such as "think" and "get" might indicate that many comments involve opinions, advice, or inquiries about market trends.
+> Frequent words like "please" and "question" imply that users may seek guidance, support, or clarification from others in the community.
+> Understanding the frequent terms can help financial service providers tailor their content to address the most common concerns of the subreddit community, such as providing guidance on market strategies or long-term investing.
+
+### Business goal 2 - Identifying Trending Topics and Key Investment Terms in Reddit Discussions
+
+
+> * Objective: * Use a word cloud to visualize the most popular terms, providing insights for content strategy and product development.
+
+![](word_cloud_popular_terms.png)
+
+#### Analysis -
+
+> Words like "money," "year," "post," and "question" stand out as highly discussed topics. This indicates that users are focused on financial matters and often seek information or clarification.
+> Terms such as "contact," "invest," "market," and "action" suggest users are actively discussing investment actions, market conditions, and seeking advice.
+> Words like "please" and "would" show a polite and inquisitive tone, suggesting that many comments are requests or inquiries rather than statements.
+> This visualization helps content creators and financial service providers to focus on popular investment topics, tailoring educational resources and FAQs to address these specific areas of interest within the investing community.
+
+### Business goal 3 - Determining Whether Certain Events Lead to Increased Discussion Volume
+
+
+> * Objective: * Analyze comment volume over time to identify peaks and trends that might correlate with specific events or market conditions.
+
+![](line_chart_reddit_comment_over_time.png)
+
+#### Analysis -
+
+> We can observe periods of increased comment volume, possibly correlating with events like quarterly earnings reports, major economic announcements, or high market volatility.
+> Peaks in comment volume could indicate heightened interest or concern, potentially tied to external factors impacting the stock market (e.g., inflation reports, geopolitical events).
+>A sustained increase or decrease in comment volume could suggest changes in investor engagement or interest over time, which may be useful for predicting shifts in market sentiment.
+>Financial analysts and investment firms can use this data to monitor when investors are most engaged, providing an early indicator of market sentiment and potential volatility. Recognizing these spikes can help them align their outreach efforts with periods of high investor activity.
+
+
+### Business goal 4 - Determining Which Stocks Are Most Frequently Mentioned on Reddit
+
+> * Objective: * Use a bubble chart to gauge the popularity of specific stocks based on Reddit mentions and compare these against stock prices.
+
+![](bubble_chart_stock_vs_prices.png)
+
+#### Analysis -
+
+> Stocks with high mentions but varying prices show that price alone does not drive popularity. For example, highly discussed low-priced stocks may indicate interest in speculative or trending assets, while high-priced, frequently mentioned stocks likely represent established companies.
+> Stocks with larger bubbles have the highest number of mentions, indicating strong interest or high relevance within the subreddit community.
+> Stocks with both high prices and high mention volumes might be subject to more scrutiny and could exhibit higher volatility, as many investors track and discuss them closely.
+> Understanding which stocks are most discussed can help analysts gauge retail investor sentiment and identify stocks that may be susceptible to price movements due to public interest. This data can inform investment strategies, risk management, and the focus of research reports.

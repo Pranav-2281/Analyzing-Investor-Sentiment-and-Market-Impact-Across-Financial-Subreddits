@@ -1,0 +1,136 @@
+# Exploratory Data Analysis
+
+Link to full code:
+
+[link](student-starter-notebook-sagemaker_crypto_eda.html)
+
+[link](Investing_EDA.ipynb)
+
+
+
+## Introduction
+
+This page presents an exploratory data analysis (EDA) of a CryptoCurrency and Investing subreddit data, focusing on data cleaning and exploring user activity in relation to market data. The analysis begins by ensuring the dataset's integrity, followed by exploring the content, such as popular posts and comments, and their relation stock and security prices.
+
+By combining Reddit discussions with market data, this part of the analysis aims to uncover patterns between user engagement and market movements, offering insights into how online conversations might influence or reflect investing trends.
+
+## Data Overview and Quality Check
+
+
+The data used for the analysis consists of posts and comments from the CryptoCurrency subreddit, sourced from a subset of the Reddit Archive data. The comments dataset has 17 columns, with the most important being author, body, score, created_utc (timestamp), and parent_id for comment threads. The submissions dataset contains 21 columns, with key ones being author, created_utc, score, title, num_comments, and selftext. Both datasets rely on created_utc for analyzing timing and user activity patterns.
+
+In order to check the quality of the data, a number of quality checks and cleaning processes were performed. First, for the submissions/posts data, null values were counted across all columns, both for numeric and non-numeric fields. It showed that there were not any nulls in columns of significance that would invalidate that post for any reason. Then rows with titles shorter than three characters were filtered out, to remove posts without substance. The reason the limit was set to three characters is that some of the cryptocurrency and stock symbols are three charcters long, and we wanted to avoid removing any such mentions. Additionally, the number of rows and columns was checked, and rows with the title "[removed]" were counted, but none were present. The final size of the posts data after cleaning came out to 205,391x21. For the comments data, similar processes were conducted, but with a focus on the body of the comment. For the comments, there were some that had a body of "[removed]", and those were removed from the dataset. The final size of the comments data after cleaning came out to 3,667,315x17.
+
+
+## CryptoCurrency Subreddit Analysis
+
+### Most common words on the CryptoCurrency on sub reddit.
+
+#### Process
+
+Using PySpark, the text of post titles and comment bodies was first converted to lowercase, split into individual words, and processed for relevance. A custom stop words list, which included both standard English stop words and context-specific terms like "get," "need," and ">", was used to filter out irrelevant words. Each title and comment was split into an array of words, and stop words were removed with PySpark's StopWordsRemover function. The remaining words were then "exploded" to create a separate row for each word, facilitating an accurate count of each term's frequency. This word count data was then sorted in descending order to display the most common terms.
+
+![](crypto_comments_wordcloud.png)
+
+![](crypto_posts_wordcloud.png)
+
+#### Analysis
+
+
+The analysis of word frequencies highlights the CryptoCurrency subreddit community's main interests. In both post titles and comments, terms like "crypto," "bitcoin," and "btc" dominate, showing a strong focus on general cryptocurrency discussions and key assets. Titles include terms like "binance," "wallet," "exchange," and "trading," indicating practical topics like trading tools, platforms, and investment strategies, along with "price," "market," and "buy," which reflect a keen interest in market trends and guidance.
+
+In comments, terms such as "like," "people," and "think" reflect an interactive community, where opinions, sentiments, and advice are frequently shared. Unique terms like "moons" suggest the culture of crypto discussions and meme references within the community. Overall, these findings reveal the subreddit’s focus on major cryptocurrencies, trading tools, and community-driven discussions around trends and market activities.
+
+
+### Cryptocurrencies most frequently mentioned on Subseddit.
+
+#### Process
+
+Since word counts for posts and comments were already done in the process of the previous goal, the mentions of the top cryptocurrencies can easily be extrated from the general word counts. 12 of the most popular cryptocurrencies according to multiple online sources were looked, and the results can be seen below.
+
+![](top_currencies_comments.png)
+
+![](top_currencies_posts.png)
+
+
+Unsuprisingly, Bitcoin leads discussions on the CryptoCurrency subreddit by a large margin, with the highest mention counts in both posts and comments, signaling it as the most popular topic. Ethereum and Binance also rank high, reflecting strong interest. Solana, XRP, and Cardano have moderate mentions, suggesting growing community attention, while Polygon, Dogecoin, and Tether appear less frequently, showing niche interest. Overall, Bitcoin, Ethereum, and Binance dominate, while emerging tokens like Solana indicate shifting trends.
+
+### How cryptocurreny prices affect the number of posts and comments on the CryptoCurrencies reddit.
+
+
+Using PySpark, the data from the CryptoCurrencies subreddit, including post timestamps and comment counts, was first merged with cryptocurrency price data from external sources. Two sets of price data was used, daily Bitcoin prices over time which were sourced from github, and the S&P Cryptocurrency Broad Digital Market Index, is intended to monitor the performance of digital assets listed on reputable open digital exchanges and was sourced from S&P Global website. The timestamps of posts and comments were then matched with the corresponding cryptocurrency prices at the time of posting. Data preprocessing included converting timestamps to a common format and handling missing or outlier values in both price and comment data. After aligning the data, the variables were plotted to see how they matched up against each other over time and if any trends could be noticed. 
+
+![](btc_v_comments.png)
+
+![](crypto_subplots.png)
+
+
+As can be seen in the graphs, suprisingly, at least in the time frame of the given data, there does not seem to be an increase in activity on the CryptoCurrency sub reddit when the price of Bitcoin and CryptoCurrencies in general are higher. The S&P index almost mirrors the price of Bitcoin, which makes sense as Bitcoin is by far the biggest cryptocurrency and makes up the majority of the crypto market. But the most activity on the subreddit occured when prices for Bitcoin and Cryptocurrencies were at their lowest. And as the prices increased, activity decreased. The reason for this decrease could be related to increased prices, as people may be more likely to post and engage in the subreddit when prices are down due to worries or potential opportunity to invest and make gains, but there are also likely other factors in play, such as news or new regulations. Further analysis would need to be conducted to say what drives increased acticity on the sub reddit, but it can at least be said that there does not seem to be a positive correlation between sub reddit activity and crypto prices.
+
+
+## Investing Subreddit Analysis
+
+### Most Common Words on Investing Subreddit
+
+
+![](bar chart_20_most_common words.png)
+
+
+> Words like "money," "market," "years," and "invest" suggest that users are primarily discussing financial concepts, market conditions, and long-term investment strategies.
+> The presence of words such as "think" and "get" might indicate that many comments involve opinions, advice, or inquiries about market trends.
+> Frequent words like "please" and "question" imply that users may seek guidance, support, or clarification from others in the community.
+> Understanding the frequent terms can help financial service providers tailor their content to address the most common concerns of the subreddit community, such as providing guidance on market strategies or long-term investing.
+
+### Trending Topics and Key Investment Terms in Reddit Discussions
+
+
+![](word_cloud_popular_terms.png)
+
+
+
+> Words like "money," "year," "post," and "question" stand out as highly discussed topics. This indicates that users are focused on financial matters and often seek information or clarification.
+> Terms such as "contact," "invest," "market," and "action" suggest users are actively discussing investment actions, market conditions, and seeking advice.
+> Words like "please" and "would" show a polite and inquisitive tone, suggesting that many comments are requests or inquiries rather than statements.
+> This visualization helps content creators and financial service providers to focus on popular investment topics, tailoring educational resources and FAQs to address these specific areas of interest within the investing community.
+
+### Whether Certain Events Lead to Increased Discussion Volume
+
+
+![](line_chart_reddit_comment_over_time.png)
+
+
+
+> We can observe periods of increased comment volume, possibly correlating with events like quarterly earnings reports, major economic announcements, or high market volatility.
+> Peaks in comment volume could indicate heightened interest or concern, potentially tied to external factors impacting the stock market (e.g., inflation reports, geopolitical events).
+>A sustained increase or decrease in comment volume could suggest changes in investor engagement or interest over time, which may be useful for predicting shifts in market sentiment.
+>Financial analysts and investment firms can use this data to monitor when investors are most engaged, providing an early indicator of market sentiment and potential volatility. Recognizing these spikes can help them align their outreach efforts with periods of high investor activity.
+
+### Temporal Analysis of Investor Engagement: Insights from Weekly and Hourly Patterns
+
+![](heatmap.png)
+
+
+
+> We can observe variations in engagement levels across different hours of the day and weeks of the year. Certain weeks display heightened engagement during specific hours, possibly correlating with scheduled market events, such as major financial disclosures, earnings reports, or global economic announcements. 
+> Peaks during specific hours of the day could reflect global market overlaps or times when critical news is released, suggesting high investor activity.
+> This temporal pattern could provide insights into investor behavior, helping financial institutions identify optimal times for market interventions or communications. Monitoring these engagement trends might also aid in forecasting potential shifts in market sentiment or identifying high-risk periods of volatility. Recognizing these hourly and weekly peaks allows analysts to better time their analyses, strategies, and outreach efforts to coincide with the most engaged audience.
+
+### Most Frequently Mentioned Stocks on Reddit
+
+<iframe src="bubble_plot.html" width="100%" height="600px" frameborder="0"></iframe>
+
+
+
+> Stocks with high mentions but varying prices show that price alone does not drive popularity. For example, highly discussed low-priced stocks may indicate interest in speculative or trending assets, while high-priced, frequently mentioned stocks likely represent established companies.
+> Stocks with larger bubbles have the highest number of mentions, indicating strong interest or high relevance within the subreddit community.
+> Stocks with both high prices and high mention volumes might be subject to more scrutiny and could exhibit higher volatility, as many investors track and discuss them closely.
+> Understanding which stocks are most discussed can help analysts gauge retail investor sentiment and identify stocks that may be susceptible to price movements due to public interest. This data can inform investment strategies, risk management, and the focus of research reports.
+
+
+## External data sources
+
+btc prices: https://github.com/Habrador/Bitcoin-price-visualization/blob/main/Bitcoin-price-USD.csv
+
+s&p crypto index: https://www.spglobal.com/spdji/en/indices/digital-assets/sp-cryptocurrency-broad-digital-market-index/#overview
+
+stock prices : https://finance.yahoo.com
